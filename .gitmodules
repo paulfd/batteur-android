@@ -1,0 +1,9 @@
+[submodule "app/src/main/cpp/oboe"]
+	path = app/src/main/cpp/oboe
+	url = https://github.com/google/oboe
+[submodule "app/src/main/cpp/sfizz"]
+	path = app/src/main/cpp/sfizz
+	url = https://github.com/google/sfizz
+[submodule "app/src/main/cpp/batteur"]
+	path = app/src/main/cpp/batteur
+	url = https://github.com/google/batteur
