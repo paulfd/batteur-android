@@ -9,17 +9,15 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        createSynth()
-        // Example of a call to a native method
-        sample_text.text = stringFromJNI()
+        val synth = createSynth()
+        loadSfzString(synth, "<region> sample=*sine loop_mode=one_shot ampeg_attack=0.1 ampeg_hold=0.1 ampeg_release=0.1")
+        freeSynth(synth)
     }
 
-    /**
-     * A native method that is implemented by the 'native-lib' native library,
-     * which is packaged with this application.
-     */
-    external fun stringFromJNI(): String
-    external fun createSynth()
+    external fun createSynth(): Long
+    external fun freeSynth(synth: Long)
+    external fun loadSfzString(synth: Long, sfz: String)
+    external fun playNote(synth: Long, number: Int, velocity: Float)
 
     companion object {
         // Used to load the 'native-lib' library on application startup.
