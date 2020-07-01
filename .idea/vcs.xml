@@ -8,6 +8,11 @@
     <mapping directory="$PROJECT_DIR$/app/src/main/cpp/oboe" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/app/src/main/cpp/ogg" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/app/src/main/cpp/sfizz" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/app/src/main/cpp/sfizz/external/abseil-cpp" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/app/src/main/cpp/sfizz/vst/external/VST_SDK/VST3_SDK/base" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/app/src/main/cpp/sfizz/vst/external/VST_SDK/VST3_SDK/pluginterfaces" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/app/src/main/cpp/sfizz/vst/external/VST_SDK/VST3_SDK/public.sdk" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/app/src/main/cpp/sfizz/vst/external/VST_SDK/VST3_SDK/vstgui4" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/app/src/main/cpp/vorbis" vcs="Git" />
   </component>
 </project>

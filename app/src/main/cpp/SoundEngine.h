@@ -7,19 +7,29 @@
 
 #include <oboe/Oboe.h>
 #include <oboe/LatencyTuner.h>
+#include <vector>
+#include <array>
 #include "sfizz.hpp"
 #include "oboe/samples/shared/IRestartable.h"
 #include "oboe/samples/shared/DefaultAudioStreamCallback.h"
 
 class Callback: public DefaultAudioStreamCallback {
 public:
-    Callback(IRestartable& parent): DefaultAudioStreamCallback(parent) { }
+    Callback() = delete;
+    Callback(IRestartable& parent): DefaultAudioStreamCallback(parent)
+    {
+        for (auto& buffer: buffers)
+            buffer.resize(oboe::DefaultStreamValues::FramesPerBurst);
+    }
     oboe::DataCallbackResult onAudioReady(oboe::AudioStream *oboeStream, void *audioData, int32_t numFrames) override;
-    void setBufferTuneEnabled(bool enabled) { tuneEnabled = enabled; }
     void loadSfzString(std::string_view string);
+    void playNote(int number, uint8_t velocity)
+    {
+        sfizz.noteOn(0, number, velocity);
+    }
 private:
-    bool tuneEnabled = true;
     std::unique_ptr<oboe::LatencyTuner> latencyTuner;
+    std::array<std::vector<float>, 2> buffers;
     sfz::Sfizz sfizz;
 };
 
@@ -44,12 +54,26 @@ public:
     void setDeviceId(int32_t deviceId);
     void setChannelCount(int channelCount);
     void setAudioApi(oboe::AudioApi audioApi);
+    void playNote(int number, uint8_t velocity)
+    {
+        if (callback == nullptr)
+            return;
+
+        callback->playNote(number, velocity);
+    }
     void setBufferSizeInBursts(int32_t numBursts);
+    void loadSfzString(std::string_view string)
+    {
+        if (callback == nullptr)
+            return;
+
+        callback->loadSfzString(string);
+    }
 private:
     oboe::ManagedStream managedStream;
-    std::unique_ptr<Callback> callback;
-
+    std::unique_ptr<Callback> callback { std::make_unique<Callback>(*this) };
     oboe::Result createPlaybackStream(oboe::AudioStreamBuilder builder);
+    void start();
 };
 
 

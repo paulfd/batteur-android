@@ -1,54 +1,111 @@
 #include <jni.h>
 #include <string>
-#include <sfizz.h>
 #include <oboe/Oboe.h>
+#include "SoundEngine.h"
+#include "logging_macros.h"
+
 
 extern "C" JNIEXPORT jlong JNICALL
-Java_cc_ferrand_batteur_MainActivity_createSynth(
+Java_cc_ferrand_batteur_MainActivity_createEngine(
         JNIEnv* env,
         jobject /* this */) {
-    auto synth = sfizz_create_synth();
-    return (jlong)synth;
+    SoundEngine* engine = new(std::nothrow) SoundEngine();
+    return reinterpret_cast<jlong>(engine);
 }
 
 extern "C" JNIEXPORT void JNICALL
-Java_cc_ferrand_batteur_MainActivity_freeSynth(
+Java_cc_ferrand_batteur_MainActivity_freeEngine(
         JNIEnv* env,
         jobject /* this */,
-        jlong synthHandle) {
-    auto synth = (sfizz_synth_t*)synthHandle;
-    sfizz_free(synth);
+        jlong engineHandle) {
+    delete reinterpret_cast<SoundEngine *>(engineHandle);
 }
 
 extern "C" JNIEXPORT void JNICALL
 Java_cc_ferrand_batteur_MainActivity_loadSfzString(
         JNIEnv* env,
         jobject /* this */,
-        jlong synthHandle,
+        jlong engineHandle,
         jstring sfzString) {
     const char* sfz = env->GetStringUTFChars(sfzString, NULL);
-    auto synth = (sfizz_synth_t*) synthHandle;
-    sfizz_load_string(synth, "/", sfz);
+    auto engine = reinterpret_cast<SoundEngine*>(engineHandle);
+    if (engine == nullptr) {
+        LOGE("Engine handle is invalid, call createHandle() to create a new one");
+        return;
+    }
+    engine->loadSfzString(sfz);
 }
 
 extern "C" JNIEXPORT void JNICALL
 Java_cc_ferrand_batteur_MainActivity_playNote(
         JNIEnv* env,
         jobject /* this */,
-        jlong synthHandle,
+        jlong engineHandle,
         jint number,
         jfloat velocity) {
-    auto synth = (sfizz_synth_t*) synthHandle;
-    if (number > 0 && number < 128 && velocity >= 0.0f && velocity <= 1.0f)
-        sfizz_send_note_on(synth, 0, number, (uint8_t)(velocity * 127.0f));
+    auto engine = reinterpret_cast<SoundEngine*>(engineHandle);
+    if (engine == nullptr) {
+        LOGE("Engine handle is invalid, call createHandle() to create a new one");
+        return;
+    }
+    const auto intVelocity = [velocity]() -> uint8_t {
+        if (velocity < 0.0f)
+            return 0;
+        if (velocity > 127.0f)
+            return 127;
+        return static_cast<uint8_t>(127.0f * velocity);
+    }();
+    engine->playNote(number, intVelocity);
 }
 
 extern "C" JNIEXPORT void JNICALL
-Java_cc_ferrand_batteur_MainActivity_startOboe(
+Java_cc_ferrand_batteur_MainActivity_setAudioApi(
         JNIEnv* env,
-        jobject /* this */) {
-    auto result = oboe::AudioStreamBuilder().setSharingMode(oboe::SharingMode::Exclusive)
-                ->setPerformanceMode(oboe::PerformanceMode::LowLatency)
-                ->setFormat(oboe::AudioFormat::Float)
-                ->setCallback()
+        jobject /* this */,
+        jlong engineHandle,
+        jint audioApi) {
+    auto engine = reinterpret_cast<SoundEngine*>(engineHandle);
+    if (engine == nullptr) {
+        LOGE("Engine handle is invalid, call createHandle() to create a new one");
+        return;
+    }
+    oboe::AudioApi api = static_cast<oboe::AudioApi>(audioApi);
+    engine->setAudioApi(api);
+}
+
+extern "C" JNIEXPORT void JNICALL
+Java_cc_ferrand_batteur_MainActivity_setBufferSizeInBursts(
+        JNIEnv* env,
+        jobject /* this */,
+        jlong engineHandle,
+        jint bursts) {
+    auto engine = reinterpret_cast<SoundEngine*>(engineHandle);
+    if (engine == nullptr) {
+        LOGE("Engine handle is invalid, call createHandle() to create a new one");
+        return;
+    }
+}
+
+extern "C" JNIEXPORT void JNICALL
+Java_cc_ferrand_batteur_MainActivity_setAudioDevice(
+        JNIEnv* env,
+        jobject /* this */,
+        jlong engineHandle,
+        jint deviceId) {
+    auto engine = reinterpret_cast<SoundEngine*>(engineHandle);
+    if (engine == nullptr) {
+        LOGE("Engine handle is invalid, call createHandle() to create a new one");
+        return;
+    }
+}
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_cc_ferrand_batteur_MainActivity_00024Companion_setDefaultStreamValues(
+        JNIEnv *env,
+       jobject thiz,
+       jint sampleRate,
+       jint framesPerBurst) {
+    oboe::DefaultStreamValues::SampleRate = (int32_t) sampleRate;
+    oboe::DefaultStreamValues::FramesPerBurst = (int32_t) framesPerBurst;
 }

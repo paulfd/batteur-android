@@ -107,8 +107,10 @@ target_include_directories(batteur PUBLIC ${BATTEUR_DIR}/src)
 
 set (OBOE_DIR ./oboe)
 add_subdirectory (${OBOE_DIR} ./oboe)
-include_directories (${OBOE_DIR}/include)
 
+# Debug utilities
+set (DEBUG_UTILS_PATH "${OBOE_DIR}/samples/debug-utils")
+set (DEBUG_UTILS_SOURCES ${DEBUG_UTILS_PATH}/trace.cpp)
 
 # Creates and names a library, sets it as either STATIC
 # or SHARED, and provides the relative paths to its source code.
@@ -122,7 +124,9 @@ add_library( # Sets the name of the library.
              SHARED
 
              # Provides a relative path to your source file(s).
-             native-lib.cpp SoundEngine.cpp )
+             native-lib.cpp SoundEngine.cpp ${DEBUG_UTILS_SOURCES} )
+target_include_directories (native-lib PRIVATE ${OBOE_DIR}/include)
+target_include_directories(native-lib PRIVATE ${DEBUG_UTILS_PATH})
 
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by
