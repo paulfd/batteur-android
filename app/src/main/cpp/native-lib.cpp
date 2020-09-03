@@ -37,6 +37,89 @@ Java_cc_ferrand_batteur_MainActivity_loadSfzString(
 }
 
 extern "C" JNIEXPORT void JNICALL
+Java_cc_ferrand_batteur_MainActivity_loadSfzFile(
+        JNIEnv* env,
+        jobject /* this */,
+        jlong engineHandle,
+        jstring sfzFile) {
+    const char* sfz = env->GetStringUTFChars(sfzFile, NULL);
+    auto engine = reinterpret_cast<SoundEngine*>(engineHandle);
+    if (engine == nullptr) {
+        LOGE("Engine handle is invalid, call createHandle() to create a new one");
+        return;
+    }
+    engine->loadSfzFile(sfz);
+}
+
+extern "C" JNIEXPORT void JNICALL
+Java_cc_ferrand_batteur_MainActivity_loadBeat(
+        JNIEnv* env,
+        jobject /* this */,
+        jlong engineHandle,
+        jstring sfzFile) {
+    const char* beat = env->GetStringUTFChars(sfzFile, NULL);
+    auto engine = reinterpret_cast<SoundEngine*>(engineHandle);
+    if (engine == nullptr) {
+        LOGE("Engine handle is invalid, call createHandle() to create a new one");
+        return;
+    }
+    engine->loadBeat(beat);
+}
+
+extern "C" JNIEXPORT void JNICALL
+Java_cc_ferrand_batteur_MainActivity_play(
+        JNIEnv* env,
+        jobject /* this */,
+        jlong engineHandle) {
+    auto engine = reinterpret_cast<SoundEngine*>(engineHandle);
+    if (engine == nullptr) {
+        LOGE("Engine handle is invalid, call createHandle() to create a new one");
+        return;
+    }
+    engine->play();
+}
+
+extern "C" JNIEXPORT void JNICALL
+Java_cc_ferrand_batteur_MainActivity_fillIn(
+        JNIEnv* env,
+        jobject /* this */,
+        jlong engineHandle) {
+    auto engine = reinterpret_cast<SoundEngine*>(engineHandle);
+    if (engine == nullptr) {
+        LOGE("Engine handle is invalid, call createHandle() to create a new one");
+        return;
+    }
+    engine->fillIn();
+}
+
+extern "C" JNIEXPORT void JNICALL
+Java_cc_ferrand_batteur_MainActivity_next(
+        JNIEnv* env,
+        jobject /* this */,
+        jlong engineHandle) {
+    auto engine = reinterpret_cast<SoundEngine*>(engineHandle);
+    if (engine == nullptr) {
+        LOGE("Engine handle is invalid, call createHandle() to create a new one");
+        return;
+    }
+    engine->next();
+}
+
+extern "C" JNIEXPORT void JNICALL
+Java_cc_ferrand_batteur_MainActivity_stop(
+        JNIEnv* env,
+        jobject /* this */,
+        jlong engineHandle) {
+    auto engine = reinterpret_cast<SoundEngine*>(engineHandle);
+    if (engine == nullptr) {
+        LOGE("Engine handle is invalid, call createHandle() to create a new one");
+        return;
+    }
+    engine->stop();
+}
+
+
+extern "C" JNIEXPORT void JNICALL
 Java_cc_ferrand_batteur_MainActivity_playNote(
         JNIEnv* env,
         jobject /* this */,

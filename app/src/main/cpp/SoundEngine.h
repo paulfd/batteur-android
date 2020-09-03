@@ -10,34 +10,35 @@
 #include <vector>
 #include <array>
 #include "sfizz.hpp"
+#include "batteur.h"
 #include "oboe/samples/shared/IRestartable.h"
 #include "oboe/samples/shared/DefaultAudioStreamCallback.h"
 
 class Callback: public DefaultAudioStreamCallback {
 public:
     Callback() = delete;
-    Callback(IRestartable& parent): DefaultAudioStreamCallback(parent)
+    Callback(IRestartable& parent, sfz::Sfizz& sfizz, batteur_player_t* player)
+    : DefaultAudioStreamCallback(parent)
+    , sfizz(sfizz)
+    , player(player)
     {
+        if (player == nullptr)
+            std::terminate();
+
         for (auto& buffer: buffers)
             buffer.resize(oboe::DefaultStreamValues::FramesPerBurst);
     }
     oboe::DataCallbackResult onAudioReady(oboe::AudioStream *oboeStream, void *audioData, int32_t numFrames) override;
-    void loadSfzString(std::string_view string);
-    void playNote(int number, uint8_t velocity)
-    {
-        sfizz.noteOn(0, number, velocity);
-    }
 private:
-    std::unique_ptr<oboe::LatencyTuner> latencyTuner;
     std::array<std::vector<float>, 2> buffers;
-    sfz::Sfizz sfizz;
+    sfz::Sfizz& sfizz;
+    batteur_player_t* player;
 };
 
 class SoundEngine : public IRestartable {
 public:
     SoundEngine();
-
-    virtual ~SoundEngine() = default;
+    virtual ~SoundEngine();
 
     // From IRestartable
     void restart() override;
@@ -56,24 +57,26 @@ public:
     void setAudioApi(oboe::AudioApi audioApi);
     void playNote(int number, uint8_t velocity)
     {
-        if (callback == nullptr)
-            return;
-
-        callback->playNote(number, velocity);
+        sfizz.noteOn(0, number, velocity);
     }
     void setBufferSizeInBursts(int32_t numBursts);
-    void loadSfzString(std::string_view string)
-    {
-        if (callback == nullptr)
-            return;
-
-        callback->loadSfzString(string);
-    }
+    void loadSfzFile(std::string_view path);
+    void loadSfzString(std::string_view string);
+    void loadBeat(std::string_view string);
+    void play();
+    void stop();
+    void fillIn();
+    void next();
 private:
+    sfz::Sfizz sfizz;
+    batteur_player_t* player { batteur_new() };
+    batteur_beat_t* beat;
     oboe::ManagedStream managedStream;
-    std::unique_ptr<Callback> callback { std::make_unique<Callback>(*this) };
+    std::unique_ptr<Callback> callback { std::make_unique<Callback>(*this, sfizz, player) };
     oboe::Result createPlaybackStream(oboe::AudioStreamBuilder builder);
+    static void batteurCallback(int delay, uint8_t number, uint8_t value, void* cbdata);
     void start();
+
 };
 
 

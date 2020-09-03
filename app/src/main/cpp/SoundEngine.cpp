@@ -16,11 +16,14 @@ oboe::DataCallbackResult Callback::onAudioReady(oboe::AudioStream *oboeStream, v
         Trace::beginSection("numFrames %d, Underruns %d, buffer size %d",
             numFrames, underrunCountResult.value(), bufferSize);
     }
+
     const auto numChannels = oboeStream->getChannelCount();
     if (numChannels != 2) {
         LOGE("Not a stereo channel?? Got %d", numChannels);
         return oboe::DataCallbackResult::Stop;
     }
+
+    batteur_tick(player, numFrames);
 
     auto* output = reinterpret_cast<float*>(audioData);
     float* audioBuffer[2] { buffers[0].data(), buffers[1].data() };
@@ -41,9 +44,43 @@ oboe::DataCallbackResult Callback::onAudioReady(oboe::AudioStream *oboeStream, v
     return oboe::DataCallbackResult::Continue;
 }
 
-void Callback::loadSfzString(std::string_view string)
+void SoundEngine::loadSfzString(std::string_view string)
 {
     sfizz.loadSfzString(fs::current_path().native(), std::string(string));
+}
+
+void SoundEngine::loadSfzFile(std::string_view path)
+{
+    sfizz.loadSfzFile(std::string(path));
+}
+
+void SoundEngine::loadBeat(std::string_view path)
+{
+    batteur_stop(player);
+    auto nextBeat = batteur_load_beat(std::string(path).c_str());
+    std::swap(nextBeat, beat);
+    batteur_load(player, beat);
+    batteur_free_beat(nextBeat);
+}
+
+void SoundEngine::play()
+{
+    batteur_start(player);
+}
+
+void SoundEngine::stop()
+{
+    batteur_stop(player);
+}
+
+void SoundEngine::fillIn()
+{
+    batteur_fill_in(player);
+}
+
+void SoundEngine::next()
+{
+    batteur_next(player);
 }
 
 void SoundEngine::start()
@@ -54,15 +91,41 @@ void SoundEngine::start()
             ->setAudioApi(oboe::AudioApi::Unspecified)
     );
     if (result == oboe::Result::OK){
-        managedStream->start();
+        const auto sampleRate = managedStream->getSampleRate();
+        sfizz.setSampleRate(sampleRate);
+        if (player)
+            batteur_set_sample_rate(player, sampleRate);
+
+        result = managedStream->requestStart();
+        if (result != oboe::Result::OK) {
+            LOGE("Error starting stream. %s", oboe::convertToText(result));
+        }
     } else {
         LOGE("Error creating playback stream. Error: %s", oboe::convertToText(result));
     }
 }
 
+void SoundEngine::batteurCallback(int delay, uint8_t number, uint8_t value, void* cbdata)
+{
+    auto* sfizz = (sfz::Sfizz*)cbdata;
+    if (sfizz == nullptr)
+        return;
+
+    if (value > 0)
+        sfizz->noteOn(delay, number, value);
+    else
+        sfizz->noteOff(delay, number, value);
+}
+
 SoundEngine::SoundEngine()
 {
+    batteur_note_cb(player, &SoundEngine::batteurCallback, &sfizz);
     start();
+}
+
+virtual SoundEngine::~SoundEngine()
+{
+    batteur_free(player);
 }
 
 // From IRestartable
