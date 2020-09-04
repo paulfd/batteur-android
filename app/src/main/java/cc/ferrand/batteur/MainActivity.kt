@@ -1,13 +1,7 @@
 package cc.ferrand.batteur
 
-import android.content.Context
-import android.content.pm.PackageManager
-import android.media.AudioManager
-import android.media.midi.MidiDeviceInfo
-import android.media.midi.MidiManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
 import android.view.View
 import android.widget.*
 import androidx.activity.viewModels
@@ -18,15 +12,7 @@ import java.io.File
 // Midi Info
 // https://developer.android.com/reference/android/media/midi/package-summary.html
 
-class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
-    private val AUDIO_API_OPTIONS = arrayOf<String>("Unspecified", "OpenSL ES", "AAudio")
-    private val noteNumberArray = ArrayList<String>()
-    private var selectedNote : Int = 63
-
-    init {
-        for (i in 0..127)
-            noteNumberArray.add(i.toString())
-    }
+class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,16 +20,6 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         setContentView(R.layout.activity_main)
         model.setDefaultParameters(applicationContext)
         setSupportActionBar(toolbar)
-
-        var noteArrayAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, noteNumberArray)
-        noteArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        noteSpinner.onItemSelectedListener = this
-        noteSpinner.adapter = noteArrayAdapter
-        noteSpinner.setSelection(selectedNote)
-
-        button.setOnClickListener {
-            model.playNote(selectedNote, 0.5f)
-        }
 
         btnFile.setOnClickListener {
             ChooserDialog(this)
@@ -73,15 +49,4 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         btnNext.setOnClickListener { model.next() }
     }
 
-    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        if (parent?.id == noteSpinner.id) {
-            selectedNote = position
-        }
-    }
-
-    override fun onNothingSelected(parent: AdapterView<*>?) {
-        if (parent?.id == noteSpinner.id) {
-            parent.setSelection(selectedNote)
-        }
-    }
 }

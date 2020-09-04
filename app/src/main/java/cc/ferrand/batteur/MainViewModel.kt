@@ -11,12 +11,6 @@ import android.media.midi.MidiReceiver
 import android.os.Handler
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
-import kotlin.experimental.and
-
-class SoundEngineWrapper {
-
-}
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val context = getApplication<Application>().applicationContext
