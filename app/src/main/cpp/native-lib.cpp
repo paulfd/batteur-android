@@ -6,7 +6,7 @@
 
 
 extern "C" JNIEXPORT jlong JNICALL
-Java_cc_ferrand_batteur_MainActivity_createEngine(
+Java_cc_ferrand_batteur_MainViewModel_00024Companion_mCreateEngine(
         JNIEnv* env,
         jobject /* this */) {
     SoundEngine* engine = new(std::nothrow) SoundEngine();
@@ -14,7 +14,7 @@ Java_cc_ferrand_batteur_MainActivity_createEngine(
 }
 
 extern "C" JNIEXPORT void JNICALL
-Java_cc_ferrand_batteur_MainActivity_freeEngine(
+Java_cc_ferrand_batteur_MainViewModel_00024Companion_mFreeEngine(
         JNIEnv* env,
         jobject /* this */,
         jlong engineHandle) {
@@ -22,7 +22,7 @@ Java_cc_ferrand_batteur_MainActivity_freeEngine(
 }
 
 extern "C" JNIEXPORT void JNICALL
-Java_cc_ferrand_batteur_MainActivity_loadSfzString(
+Java_cc_ferrand_batteur_MainViewModel_00024Companion_mLoadSfzString(
         JNIEnv* env,
         jobject /* this */,
         jlong engineHandle,
@@ -37,7 +37,7 @@ Java_cc_ferrand_batteur_MainActivity_loadSfzString(
 }
 
 extern "C" JNIEXPORT void JNICALL
-Java_cc_ferrand_batteur_MainActivity_loadSfzFile(
+Java_cc_ferrand_batteur_MainViewModel_00024Companion_mLoadSfzFile(
         JNIEnv* env,
         jobject /* this */,
         jlong engineHandle,
@@ -52,7 +52,7 @@ Java_cc_ferrand_batteur_MainActivity_loadSfzFile(
 }
 
 extern "C" JNIEXPORT void JNICALL
-Java_cc_ferrand_batteur_MainActivity_loadBeat(
+Java_cc_ferrand_batteur_MainViewModel_00024Companion_mLoadBeat(
         JNIEnv* env,
         jobject /* this */,
         jlong engineHandle,
@@ -67,7 +67,7 @@ Java_cc_ferrand_batteur_MainActivity_loadBeat(
 }
 
 extern "C" JNIEXPORT void JNICALL
-Java_cc_ferrand_batteur_MainActivity_play(
+Java_cc_ferrand_batteur_MainViewModel_00024Companion_mPlay(
         JNIEnv* env,
         jobject /* this */,
         jlong engineHandle) {
@@ -80,7 +80,7 @@ Java_cc_ferrand_batteur_MainActivity_play(
 }
 
 extern "C" JNIEXPORT void JNICALL
-Java_cc_ferrand_batteur_MainActivity_fillIn(
+Java_cc_ferrand_batteur_MainViewModel_00024Companion_mFillIn(
         JNIEnv* env,
         jobject /* this */,
         jlong engineHandle) {
@@ -93,7 +93,7 @@ Java_cc_ferrand_batteur_MainActivity_fillIn(
 }
 
 extern "C" JNIEXPORT void JNICALL
-Java_cc_ferrand_batteur_MainActivity_next(
+Java_cc_ferrand_batteur_MainViewModel_00024Companion_mNext(
         JNIEnv* env,
         jobject /* this */,
         jlong engineHandle) {
@@ -106,7 +106,7 @@ Java_cc_ferrand_batteur_MainActivity_next(
 }
 
 extern "C" JNIEXPORT void JNICALL
-Java_cc_ferrand_batteur_MainActivity_stop(
+Java_cc_ferrand_batteur_MainViewModel_00024Companion_mStop(
         JNIEnv* env,
         jobject /* this */,
         jlong engineHandle) {
@@ -120,7 +120,7 @@ Java_cc_ferrand_batteur_MainActivity_stop(
 
 
 extern "C" JNIEXPORT void JNICALL
-Java_cc_ferrand_batteur_MainActivity_playNote(
+Java_cc_ferrand_batteur_MainViewModel_00024Companion_mPlayNote(
         JNIEnv* env,
         jobject /* this */,
         jlong engineHandle,
@@ -142,7 +142,7 @@ Java_cc_ferrand_batteur_MainActivity_playNote(
 }
 
 extern "C" JNIEXPORT void JNICALL
-Java_cc_ferrand_batteur_MainActivity_setAudioApi(
+Java_cc_ferrand_batteur_MainViewModel_00024Companion_mSetAudioApi(
         JNIEnv* env,
         jobject /* this */,
         jlong engineHandle,
@@ -157,7 +157,7 @@ Java_cc_ferrand_batteur_MainActivity_setAudioApi(
 }
 
 extern "C" JNIEXPORT void JNICALL
-Java_cc_ferrand_batteur_MainActivity_setBufferSizeInBursts(
+Java_cc_ferrand_batteur_MainViewModel_00024Companion_mSetBufferSizeInBursts(
         JNIEnv* env,
         jobject /* this */,
         jlong engineHandle,
@@ -170,7 +170,7 @@ Java_cc_ferrand_batteur_MainActivity_setBufferSizeInBursts(
 }
 
 extern "C" JNIEXPORT void JNICALL
-Java_cc_ferrand_batteur_MainActivity_setAudioDevice(
+Java_cc_ferrand_batteur_MainViewModel_00024Companion_mSetAudioDevice(
         JNIEnv* env,
         jobject /* this */,
         jlong engineHandle,
@@ -184,7 +184,7 @@ Java_cc_ferrand_batteur_MainActivity_setAudioDevice(
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_cc_ferrand_batteur_MainActivity_00024Companion_setDefaultStreamValues(
+Java_cc_ferrand_batteur_MainViewModel_00024Companion_mSetDefaultStreamValues(
         JNIEnv *env,
        jobject thiz,
        jint sampleRate,

@@ -123,7 +123,7 @@ SoundEngine::SoundEngine()
     start();
 }
 
-virtual SoundEngine::~SoundEngine()
+SoundEngine::~SoundEngine()
 {
     batteur_free(player);
 }
