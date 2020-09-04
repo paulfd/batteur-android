@@ -1,7 +1,9 @@
 package cc.ferrand.batteur
 
 import android.content.Context
+import android.content.pm.PackageManager
 import android.media.AudioManager
+import android.media.midi.MidiManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -11,10 +13,14 @@ import com.obsez.android.lib.filechooser.ChooserDialog
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 
-class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener{
+// Midi Info
+// https://developer.android.com/reference/android/media/midi/package-summary.html
+
+class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     private val AUDIO_API_OPTIONS = arrayOf<String>("Unspecified", "OpenSL ES", "AAudio")
     private val noteNumberArray = ArrayList<String>()
     private var selectedNote : Int = 63
+    private var midiListener : MidiListener? = null
 
     init {
         for (i in 0..127)
@@ -26,6 +32,9 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener{
         val model: MainViewModel by viewModels()
         setContentView(R.layout.activity_main)
         model.setDefaultParameters(applicationContext)
+        setSupportActionBar(toolbar)
+        midiListener = MidiListener(applicationContext)
+        midiListener!!.listenForChanges()
 
         var noteArrayAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, noteNumberArray)
         noteArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -75,6 +84,11 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener{
         if (parent?.id == noteSpinner.id) {
             parent.setSelection(selectedNote)
         }
+    }
+
+    override fun onDestroy() {
+        midiListener!!.stopListeningForChanges()
+        super.onDestroy()
     }
 
 
