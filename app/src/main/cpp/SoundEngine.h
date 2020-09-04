@@ -67,6 +67,7 @@ public:
     void stop();
     void fillIn();
     void next();
+    bool isPlaying();
 private:
     sfz::Sfizz sfizz;
     batteur_player_t* player { batteur_new() };

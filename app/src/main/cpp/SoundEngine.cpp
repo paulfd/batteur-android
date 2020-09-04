@@ -68,6 +68,12 @@ void SoundEngine::play()
     batteur_start(player);
 }
 
+bool SoundEngine::isPlaying()
+{
+    return batteur_playing(player);
+}
+
+
 void SoundEngine::stop()
 {
     batteur_stop(player);

@@ -21,6 +21,19 @@ Java_cc_ferrand_batteur_MainViewModel_00024Companion_mFreeEngine(
     delete reinterpret_cast<SoundEngine *>(engineHandle);
 }
 
+extern "C" JNIEXPORT bool JNICALL
+Java_cc_ferrand_batteur_MainViewModel_00024Companion_mIsPlaying(
+        JNIEnv* env,
+        jobject /* this */,
+        jlong engineHandle) {
+    auto engine = reinterpret_cast<SoundEngine*>(engineHandle);
+    if (engine == nullptr) {
+        LOGE("Engine handle is invalid, call createHandle() to create a new one");
+        return false;
+    }
+    return engine->isPlaying();
+}
+
 extern "C" JNIEXPORT void JNICALL
 Java_cc_ferrand_batteur_MainViewModel_00024Companion_mLoadSfzString(
         JNIEnv* env,
