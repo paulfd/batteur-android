@@ -123,6 +123,14 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         mNext(engine)
     }
 
+    fun getTempo(): Double {
+        return mGetTempo(engine)
+    }
+
+    fun setTempo(tempo: Double){
+        mSetTempo(engine, tempo)
+    }
+
     fun playNote(number: Int, velocity: Float) {
         mPlayNote(engine, number, velocity)
     }
@@ -162,6 +170,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         private external fun mFillIn(engine: Long)
         private external fun mNext(engine: Long)
         private external fun mIsPlaying(engine: Long): Boolean
+        private external fun mGetTempo(engine: Long): Double
+        private external fun mSetTempo(engine: Long, tempo: Double)
         private external fun mLoadSfzString(engine: Long, sfz: String)
         private external fun mLoadSfzFile(engine: Long, path: String)
         private external fun mLoadBeat(engine: Long, path: String)

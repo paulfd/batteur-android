@@ -2,9 +2,9 @@ package cc.ferrand.batteur
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.*
+import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.widget.addTextChangedListener
 import com.obsez.android.lib.filechooser.ChooserDialog
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
@@ -25,7 +25,6 @@ class MainActivity : AppCompatActivity() {
             ChooserDialog(this)
                 .withFilter(false, "sfz")
                 .withChosenListener { s: String, file: File ->
-                    Toast.makeText(this, "Chose " + s, Toast.LENGTH_SHORT).show()
                     model.loadSfzFile(s)
                 }
                 .build()
@@ -36,11 +35,21 @@ class MainActivity : AppCompatActivity() {
             ChooserDialog(this)
                 .withFilter(false, "json")
                 .withChosenListener { s: String, file: File ->
-                    Toast.makeText(this, "Chose " + s, Toast.LENGTH_SHORT).show()
                     model.loadBeat(s)
+                    val tempo = model.getTempo().toInt()
+                    edtTempo.setText(tempo.toString())
                 }
                 .build()
                 .show()
+        }
+
+        edtTempo.addTextChangedListener {
+            val str = it.toString()
+            if (str.isNotEmpty()) {
+                val tempo = it.toString().toDouble()
+                if (tempo >= 20.0)
+                    model.setTempo(tempo)
+            }
         }
 
         btnPlay.setOnClickListener { model.play() }

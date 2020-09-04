@@ -23,6 +23,9 @@ oboe::DataCallbackResult Callback::onAudioReady(oboe::AudioStream *oboeStream, v
         return oboe::DataCallbackResult::Stop;
     }
 
+    if (player == nullptr)
+        return oboe::DataCallbackResult::Stop;
+
     batteur_tick(player, numFrames);
 
     auto* output = reinterpret_cast<float*>(audioData);
@@ -58,9 +61,11 @@ void SoundEngine::loadBeat(std::string_view path)
 {
     batteur_stop(player);
     auto nextBeat = batteur_load_beat(std::string(path).c_str());
-    std::swap(nextBeat, beat);
-    batteur_load(player, beat);
-    batteur_free_beat(nextBeat);
+    if (nextBeat != nullptr) {
+        batteur_load(player, nextBeat);
+        batteur_free_beat(beat);
+        beat = nextBeat;
+    }
 }
 
 void SoundEngine::play()
@@ -189,4 +194,12 @@ oboe::Result SoundEngine::createPlaybackStream(oboe::AudioStreamBuilder builder)
             ->setFormat(oboe::AudioFormat::Float)
             ->setCallback(callback.get())
             ->openManagedStream(managedStream);
+}
+
+double SoundEngine::getTempo() const {
+    return batteur_get_tempo(player);
+}
+
+void SoundEngine::setTempo(double tempo) {
+    batteur_set_tempo(player, tempo);
 }

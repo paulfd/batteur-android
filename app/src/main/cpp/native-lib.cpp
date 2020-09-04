@@ -21,7 +21,7 @@ Java_cc_ferrand_batteur_MainViewModel_00024Companion_mFreeEngine(
     delete reinterpret_cast<SoundEngine *>(engineHandle);
 }
 
-extern "C" JNIEXPORT bool JNICALL
+extern "C" JNIEXPORT jboolean JNICALL
 Java_cc_ferrand_batteur_MainViewModel_00024Companion_mIsPlaying(
         JNIEnv* env,
         jobject /* this */,
@@ -33,6 +33,34 @@ Java_cc_ferrand_batteur_MainViewModel_00024Companion_mIsPlaying(
     }
     return engine->isPlaying();
 }
+
+extern "C" JNIEXPORT jdouble JNICALL
+Java_cc_ferrand_batteur_MainViewModel_00024Companion_mGetTempo(
+        JNIEnv* env,
+        jobject /* this */,
+        jlong engineHandle) {
+    auto engine = reinterpret_cast<SoundEngine*>(engineHandle);
+    if (engine == nullptr) {
+        LOGE("Engine handle is invalid, call createHandle() to create a new one");
+        return false;
+    }
+    return engine->getTempo();
+}
+
+extern "C" JNIEXPORT void JNICALL
+Java_cc_ferrand_batteur_MainViewModel_00024Companion_mSetTempo(
+        JNIEnv* env,
+        jobject /* this */,
+        jlong engineHandle,
+        jdouble tempo) {
+    auto engine = reinterpret_cast<SoundEngine*>(engineHandle);
+    if (engine == nullptr) {
+        LOGE("Engine handle is invalid, call createHandle() to create a new one");
+        return;
+    }
+    engine->setTempo(tempo);
+}
+
 
 extern "C" JNIEXPORT void JNICALL
 Java_cc_ferrand_batteur_MainViewModel_00024Companion_mLoadSfzString(
@@ -69,8 +97,8 @@ Java_cc_ferrand_batteur_MainViewModel_00024Companion_mLoadBeat(
         JNIEnv* env,
         jobject /* this */,
         jlong engineHandle,
-        jstring sfzFile) {
-    const char* beat = env->GetStringUTFChars(sfzFile, NULL);
+        jstring beatPath) {
+    const char* beat = env->GetStringUTFChars(beatPath, NULL);
     auto engine = reinterpret_cast<SoundEngine*>(engineHandle);
     if (engine == nullptr) {
         LOGE("Engine handle is invalid, call createHandle() to create a new one");

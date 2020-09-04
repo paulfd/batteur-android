@@ -68,10 +68,12 @@ public:
     void fillIn();
     void next();
     bool isPlaying();
+    void setTempo(double tempo);
+    double getTempo() const;
 private:
     sfz::Sfizz sfizz;
     batteur_player_t* player { batteur_new() };
-    batteur_beat_t* beat;
+    batteur_beat_t* beat { nullptr };
     oboe::ManagedStream managedStream;
     std::unique_ptr<Callback> callback { std::make_unique<Callback>(*this, sfizz, player) };
     oboe::Result createPlaybackStream(oboe::AudioStreamBuilder builder);
@@ -82,3 +84,4 @@ private:
 
 
 #endif //BATTEUR_SOUNDENGINE_H
+
