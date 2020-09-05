@@ -272,7 +272,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         val audioService = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
         val sampleRate = audioService.getProperty(AudioManager.PROPERTY_OUTPUT_SAMPLE_RATE).toInt()
         val framesPerBurst =
-            audioService.getProperty(AudioManager.PROPERTY_OUTPUT_FRAMES_PER_BUFFER).toInt() * 2
+            audioService.getProperty(AudioManager.PROPERTY_OUTPUT_FRAMES_PER_BUFFER).toInt()
         mSetDefaultStreamValues(sampleRate, framesPerBurst)
     }
 
