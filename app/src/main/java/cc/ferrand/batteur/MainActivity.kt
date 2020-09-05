@@ -10,6 +10,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
+import androidx.lifecycle.observe
 import com.obsez.android.lib.filechooser.ChooserDialog
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
@@ -135,7 +136,6 @@ class MainActivity : AppCompatActivity() {
                         .withFilter(false, "json")
                         .withChosenListener { s: String, file: File ->
                             loadBeat(s, model)
-                            changeButtonsToPlay()
                             model.customBeatName = file.nameWithoutExtension
                             model.currentBeatIndex = position
                             model.beatList[0] = model.customBeatName
@@ -153,7 +153,6 @@ class MainActivity : AppCompatActivity() {
                         "${dataDir.path}/${model.beatAssetDirectory}/${model.beatList[position]}${model.beatFileExtension}"
                     Log.d("spnBeats", "Beat path $beatFilePath")
                     loadBeat(beatFilePath, model)
-                    changeButtonsToPlay()
                     model.currentBeatIndex = position
                 }
             }
@@ -203,17 +202,22 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        if (model.isPlaying()) {
+        if (model.ldPlaying.value == true)
             changeButtonsToStop()
+
+        model.ldPlaying.observe(this) {
+            if (it) {
+                changeButtonsToStop()
+            } else {
+                changeButtonsToPlay()
+            }
         }
 
         btnPlay.setOnClickListener {
             if (model.isPlaying()) {
                 model.stop()
-                changeButtonsToPlay()
             } else {
                 model.play()
-                changeButtonsToStop()
             }
         }
         btnFill.setOnClickListener { model.fillIn() }
@@ -222,7 +226,7 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun changeButtonsToPlay() {
-        btnPlay.setBackgroundColor(applicationContext.getColor(R.color.colorPrimaryDark))
+        btnPlay.setBackgroundColor(applicationContext.getColor(R.color.colorPrimary))
         btnPlay.text = "Play"
         btnFill.isEnabled = false
         btnNext.isEnabled = false

@@ -11,6 +11,8 @@ import android.media.midi.MidiReceiver
 import android.os.Handler
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import java.io.File
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
@@ -37,6 +39,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     var currentDrumIndex = -1
     var customDrumName = ""
     var customBeatName = ""
+
+    private val mldPlaying = MutableLiveData<Boolean>(false)
+    val ldPlaying: LiveData<Boolean> = mldPlaying
 
 
     init {
@@ -215,10 +220,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun play() {
+        Handler(context.mainLooper).post { mldPlaying.value = true }
         mPlay(engine)
     }
 
     fun stop() {
+        Handler(context.mainLooper).post { mldPlaying.value = false }
         mStop(engine)
     }
 
@@ -238,7 +245,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         return mGetTempo(engine)
     }
 
-    fun setTempo(tempo: Double){
+    fun setTempo(tempo: Double) {
         mSetTempo(engine, tempo)
     }
 
@@ -251,6 +258,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun loadBeat(path: String) {
+        mldPlaying.value = false
         mLoadBeat(engine, path)
     }
 
