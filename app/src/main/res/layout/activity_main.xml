@@ -21,28 +21,6 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <Button
-        android:id="@+id/btnFile"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="Open SFZ File"
-        app:layout_constraintEnd_toStartOf="@+id/tvTempo"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tvTempo" />
-
-    <Button
-        android:id="@+id/btnBeatFile"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:text="Open Beat"
-        app:layout_constraintEnd_toEndOf="@+id/btnFile"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnFile" />
-
-    <Button
         android:id="@+id/btnPlay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -50,7 +28,7 @@
         android:layout_marginTop="16dp"
         android:text="Play"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnBeatFile" />
+        app:layout_constraintTop_toBottomOf="@+id/spnBeats" />
 
     <Button
         android:id="@+id/btnStop"
@@ -84,11 +62,12 @@
         android:id="@+id/btnTap"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="5dp"
         android:text="Tap"
-        app:layout_constraintBottom_toBottomOf="@+id/btnBeatFile"
+        app:layout_constraintBottom_toBottomOf="@+id/spnBeats"
         app:layout_constraintEnd_toEndOf="@+id/tvTempo"
         app:layout_constraintStart_toStartOf="@+id/tvTempo"
-        app:layout_constraintTop_toTopOf="@+id/btnBeatFile" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
 
     <TextView
         android:id="@+id/tvTempo"
@@ -106,6 +85,7 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="0dp"
@@ -126,5 +106,26 @@
             android:selectAllOnFocus="true"
             android:textAlignment="center" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <Spinner
+        android:id="@+id/spnDrums"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/tvTempo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvTempo" />
+
+    <Spinner
+        android:id="@+id/spnBeats"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/spnDrums"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spnDrums" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
