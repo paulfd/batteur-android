@@ -10,7 +10,6 @@ import android.media.midi.MidiOutputPort
 import android.media.midi.MidiReceiver
 import android.os.Handler
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import java.io.File
 
@@ -25,7 +24,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private var lastMainDown = 0L
     private var lastMainUp = 0L
     private var mainCC = 30
-    private val overwriteAssets = true
+    private val overwriteAssets = false
 
     val drumAssetDirectory = "drums"
     val drumSamplesAssetDirectory = "drums/samples"
@@ -168,7 +167,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 0xB0 -> {
                     val number = msg[offset + 1].toInt()
                     val value = msg[offset + 2].toInt()
-                    if (number == mainCC) {
+//                    if (number == mainCC) {
+                    if (true) { // any CC
                         if (value == 127) {
                             lastMainUp = timestamp
                         } else if (value == 0) {

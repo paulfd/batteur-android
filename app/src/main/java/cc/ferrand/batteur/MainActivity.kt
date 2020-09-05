@@ -8,15 +8,11 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
 import com.obsez.android.lib.filechooser.ChooserDialog
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
-import java.io.InputStream
-import java.io.OutputStream
-import java.util.Collections
 import kotlin.math.round
 
 // Midi Info
@@ -63,7 +59,7 @@ class MainActivity : AppCompatActivity() {
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>,
-                view: View, position: Int, id: Long
+                view: View?, position: Int, id: Long
             ) {
                 Log.d("spnDrums", "Item $position selected !")
 
@@ -128,7 +124,7 @@ class MainActivity : AppCompatActivity() {
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>,
-                view: View, position: Int, id: Long
+                view: View?, position: Int, id: Long
             ) {
                 Log.d("spnBeats", "Item $position selected !")
                 if (position == model.currentBeatIndex)
@@ -139,6 +135,7 @@ class MainActivity : AppCompatActivity() {
                         .withFilter(false, "json")
                         .withChosenListener { s: String, file: File ->
                             loadBeat(s, model)
+                            changeButtonsToPlay()
                             model.customBeatName = file.nameWithoutExtension
                             model.currentBeatIndex = position
                             model.beatList[0] = model.customBeatName
@@ -156,6 +153,7 @@ class MainActivity : AppCompatActivity() {
                         "${dataDir.path}/${model.beatAssetDirectory}/${model.beatList[position]}${model.beatFileExtension}"
                     Log.d("spnBeats", "Beat path $beatFilePath")
                     loadBeat(beatFilePath, model)
+                    changeButtonsToPlay()
                     model.currentBeatIndex = position
                 }
             }
@@ -205,10 +203,35 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        btnPlay.setOnClickListener { model.play() }
-        btnStop.setOnClickListener { model.stop() }
+        if (model.isPlaying()) {
+            changeButtonsToStop()
+        }
+
+        btnPlay.setOnClickListener {
+            if (model.isPlaying()) {
+                model.stop()
+                changeButtonsToPlay()
+            } else {
+                model.play()
+                changeButtonsToStop()
+            }
+        }
         btnFill.setOnClickListener { model.fillIn() }
         btnNext.setOnClickListener { model.next() }
     }
 
+
+    private fun changeButtonsToPlay() {
+        btnPlay.setBackgroundColor(applicationContext.getColor(R.color.colorPrimaryDark))
+        btnPlay.text = "Play"
+        btnFill.isEnabled = false
+        btnNext.isEnabled = false
+    }
+
+    private fun changeButtonsToStop() {
+        btnPlay.setBackgroundColor(applicationContext.getColor(R.color.design_default_color_error))
+        btnPlay.text = "Stop"
+        btnFill.isEnabled = true
+        btnNext.isEnabled = true
+    }
 }

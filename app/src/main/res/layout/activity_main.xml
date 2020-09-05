@@ -13,50 +13,12 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
-        android:theme="@android:style/Widget.Material.Toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-
-    <Button
-        android:id="@+id/btnPlay"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="Play"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spnBeats" />
-
-    <Button
-        android:id="@+id/btnStop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="Stop"
-        app:layout_constraintStart_toEndOf="@+id/btnPlay"
-        app:layout_constraintTop_toTopOf="@+id/btnPlay" />
-
-    <Button
-        android:id="@+id/btnFill"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="Fill in"
-        app:layout_constraintStart_toEndOf="@+id/btnStop"
-        app:layout_constraintTop_toTopOf="@+id/btnStop" />
-
-    <Button
-        android:id="@+id/btnNext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="Next"
-        app:layout_constraintStart_toEndOf="@+id/btnFill"
-        app:layout_constraintTop_toTopOf="@+id/btnFill" />
+        android:theme="@style/ThemeOverlay.MaterialComponents.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light" />
 
     <Button
         android:id="@+id/btnTap"
@@ -67,7 +29,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/spnBeats"
         app:layout_constraintEnd_toEndOf="@+id/tvTempo"
         app:layout_constraintStart_toStartOf="@+id/tvTempo"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
+        app:layout_constraintTop_toBottomOf="@+id/edtTempo" />
 
     <TextView
         android:id="@+id/tvTempo"
@@ -84,28 +46,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout2"
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/edtTempo"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="0dp"
-        android:hint="Tempo"
-        android:padding="0dp"
-        app:hintAnimationEnabled="false"
-        app:hintEnabled="false"
+        android:layout_height="36dp"
+        android:inputType="number"
+        android:paddingTop="0dp"
+        android:selectAllOnFocus="true"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="@+id/tvTempo"
         app:layout_constraintStart_toStartOf="@+id/tvTempo"
-        app:layout_constraintTop_toBottomOf="@+id/tvTempo">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edtTempo"
-            android:layout_width="match_parent"
-            android:layout_height="36dp"
-            android:inputType="number"
-            android:paddingTop="0dp"
-            android:selectAllOnFocus="true"
-            android:textAlignment="center" />
-    </com.google.android.material.textfield.TextInputLayout>
+        app:layout_constraintTop_toBottomOf="@+id/tvTempo" />
 
     <Spinner
         android:id="@+id/spnDrums"
@@ -127,5 +79,40 @@
         app:layout_constraintEnd_toEndOf="@+id/spnDrums"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spnDrums" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spnBeats">
+
+
+        <Button
+            android:id="@+id/btnFill"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:enabled="false"
+            android:text="Fill in" />
+
+        <Button
+            android:id="@+id/btnPlay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Play" />
+
+        <Button
+            android:id="@+id/btnNext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:enabled="false"
+            android:text="Next" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
