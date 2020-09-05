@@ -11,10 +11,9 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:layout_marginTop="4dp"
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        android:theme="@android:style/Widget.Material.Toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,23 +25,20 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:text="Open SFZ File"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintEnd_toStartOf="@+id/tvTempo"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        app:layout_constraintTop_toTopOf="@+id/tvTempo" />
 
     <Button
         android:id="@+id/btnBeatFile"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
         android:text="Open Beat"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/btnFile"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnFile" />
 
@@ -84,27 +80,51 @@
         app:layout_constraintStart_toEndOf="@+id/btnFill"
         app:layout_constraintTop_toTopOf="@+id/btnFill" />
 
-    <com.rengwuxian.materialedittext.MaterialEditText
-        android:id="@+id/edtTempo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:inputType="number"
-        app:layout_constraintTop_toBottomOf="@+id/btnStop"
-        app:met_floatingLabel="normal"
-        app:met_floatingLabelAlwaysShown="true"
-        app:met_floatingLabelText="Tempo"
-        tools:layout_editor_absoluteX="0dp">
-
-    </com.rengwuxian.materialedittext.MaterialEditText>
-
     <Button
-        android:id="@+id/tapBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:id="@+id/btnTap"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:text="Tap"
-        app:layout_constraintTop_toBottomOf="@+id/edtTempo"
-        tools:layout_editor_absoluteX="161dp" />
+        app:layout_constraintBottom_toBottomOf="@+id/btnBeatFile"
+        app:layout_constraintEnd_toEndOf="@+id/tvTempo"
+        app:layout_constraintStart_toStartOf="@+id/tvTempo"
+        app:layout_constraintTop_toTopOf="@+id/btnBeatFile" />
+
+    <TextView
+        android:id="@+id/tvTempo"
+        android:layout_width="104dp"
+        android:layout_height="15dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_weight="1"
+        android:focusableInTouchMode="true"
+        android:padding="0dp"
+        android:text="Tempo"
+        android:textAlignment="center"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="0dp"
+        android:hint="Tempo"
+        android:padding="0dp"
+        app:hintAnimationEnabled="false"
+        app:hintEnabled="false"
+        app:layout_constraintEnd_toEndOf="@+id/tvTempo"
+        app:layout_constraintStart_toStartOf="@+id/tvTempo"
+        app:layout_constraintTop_toBottomOf="@+id/tvTempo">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtTempo"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:inputType="number"
+            android:paddingTop="0dp"
+            android:selectAllOnFocus="true"
+            android:textAlignment="center" />
+    </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

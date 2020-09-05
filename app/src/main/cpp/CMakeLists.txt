@@ -5,7 +5,7 @@
 
 cmake_minimum_required(VERSION 3.4.1)
 SET(CMAKE_CXX_STANDARD 14)
-SET(CMAKE_BUILD_TYPE Debug)
+SET(CMAKE_BUILD_TYPE Release)
 SET(OGG_DIR ogg)
 configure_file(${OGG_DIR}/include/ogg/config_types.h.in ${OGG_DIR}/include/ogg/config_types.h @ONLY)
 add_library(ogg STATIC
