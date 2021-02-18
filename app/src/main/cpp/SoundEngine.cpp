@@ -130,6 +130,7 @@ void SoundEngine::batteurCallback(int delay, uint8_t number, uint8_t value, void
 
 SoundEngine::SoundEngine()
 {
+    sfizz.setNumVoices(24);
     batteur_note_cb(player, &SoundEngine::batteurCallback, &sfizz);
     start();
 }

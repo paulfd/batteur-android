@@ -10,6 +10,9 @@
     <mapping directory="$PROJECT_DIR$/app/src/main/cpp/sfizz" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/app/src/main/cpp/sfizz/editor/external/vstgui4" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/app/src/main/cpp/sfizz/external/abseil-cpp" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/app/src/main/cpp/sfizz/external/st_audiofile/thirdparty/dr_libs" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/app/src/main/cpp/sfizz/external/st_audiofile/thirdparty/libaiff" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/app/src/main/cpp/sfizz/external/st_audiofile/thirdparty/stb_vorbis" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/app/src/main/cpp/sfizz/vst/external/VST_SDK/VST3_SDK/base" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/app/src/main/cpp/sfizz/vst/external/VST_SDK/VST3_SDK/pluginterfaces" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/app/src/main/cpp/sfizz/vst/external/VST_SDK/VST3_SDK/public.sdk" vcs="Git" />
