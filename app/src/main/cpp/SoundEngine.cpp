@@ -39,7 +39,7 @@ oboe::DataCallbackResult Callback::onAudioReady(oboe::AudioStream *oboeStream, v
             output[renderIdx + 2 * i] = buffers[0][i];
             output[renderIdx + 2 * i + 1] = buffers[1][i];
         }
-        renderIdx += frames;
+        renderIdx += 2 * frames;
         numFrames -= frames;
     }
     if (Trace::isEnabled())
