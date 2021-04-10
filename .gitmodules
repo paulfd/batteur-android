@@ -7,6 +7,3 @@
 [submodule "app/src/main/cpp/batteur"]
 	path = app/src/main/cpp/batteur
 	url = https://github.com/paulfd/batteur
-[submodule "app/src/main/cpp/vorbis"]
-	path = app/src/main/cpp/vorbis
-	url = https://github.com/xiph/vorbis.git
