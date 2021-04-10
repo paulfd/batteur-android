@@ -7,15 +7,6 @@
 [submodule "app/src/main/cpp/batteur"]
 	path = app/src/main/cpp/batteur
 	url = https://github.com/paulfd/batteur
-[submodule "app/src/main/cpp/ogg"]
-	path = app/src/main/cpp/ogg
-	url = https://github.com/xiph/ogg.git
 [submodule "app/src/main/cpp/vorbis"]
 	path = app/src/main/cpp/vorbis
 	url = https://github.com/xiph/vorbis.git
-[submodule "app/src/main/cpp/flac"]
-	path = app/src/main/cpp/flac
-	url = https://github.com/xiph/flac.git
-[submodule "app/src/main/cpp/libsndfile"]
-	path = app/src/main/cpp/libsndfile
-	url = https://github.com/erikd/libsndfile.git
