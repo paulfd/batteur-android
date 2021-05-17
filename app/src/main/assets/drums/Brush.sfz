@@ -11,9 +11,6 @@ lokey=41 hikey=59
 loop_mode=no_loop
 effect1=5
 ampeg_attack=0.001
-amplfo_freq=8.176
-fillfo_freq=8.176
-pitchlfo_freq=8.176
 fil_type=lpf_2p
 cutoff=19913
 
@@ -86,9 +83,6 @@ volume=-1.588
 loop_mode=no_loop
 effect1=5
 ampeg_attack=0.001
-amplfo_freq=8.176
-fillfo_freq=8.176
-pitchlfo_freq=8.176
 fil_type=lpf_2p
 cutoff=19913
 
@@ -890,9 +884,6 @@ lokey=60 hikey=127
 loop_mode=no_loop
 effect1=5
 ampeg_attack=0.001
-amplfo_freq=8.176
-fillfo_freq=8.176
-pitchlfo_freq=8.176
 fil_type=lpf_2p
 cutoff=19913
 
@@ -953,9 +944,6 @@ sample=samples\Cabasa(R).wav
 lokey=69 hikey=69
 pitch_keycenter=69
 pan=100
-amplfo_freq=5.12681
-fillfo_freq=5.12681
-pitchlfo_freq=5.12681
 ampeg_release=4
 offset=0
 end=7691
@@ -967,9 +955,6 @@ sample=samples\Cabasa(L).wav
 lokey=69 hikey=69
 pitch_keycenter=69
 pan=-100
-amplfo_freq=5.12681
-fillfo_freq=5.12681
-pitchlfo_freq=5.12681
 ampeg_release=4
 volume=0
 offset=0
@@ -982,9 +967,6 @@ sample=samples\Maracas(R).wav
 lokey=70 hikey=70
 pitch_keycenter=70
 pan=100
-amplfo_freq=5.12681
-fillfo_freq=5.12681
-pitchlfo_freq=5.12681
 ampeg_release=5.33936
 offset=0
 end=4613
@@ -996,9 +978,6 @@ sample=samples\Maracas(L).wav
 lokey=70 hikey=70
 pitch_keycenter=70
 pan=-100
-amplfo_freq=5.12681
-fillfo_freq=5.12681
-pitchlfo_freq=5.12681
 ampeg_release=5.33936
 offset=0
 end=4613
@@ -1064,9 +1043,6 @@ sample=samples\Guiro Up(R).wav
 lokey=74 hikey=74
 pitch_keycenter=74
 pan=100
-amplfo_freq=5.12681
-fillfo_freq=5.12681
-pitchlfo_freq=5.12681
 pitcheg_release=5.33936
 fileg_release=5.33936
 ampeg_release=5.33936
@@ -1083,9 +1059,6 @@ sample=samples\Guiro Up(L).wav
 lokey=74 hikey=74
 pitch_keycenter=74
 pan=-100
-amplfo_freq=5.12681
-fillfo_freq=5.12681
-pitchlfo_freq=5.12681
 pitcheg_release=5.33936
 fileg_release=5.33936
 ampeg_release=5.33936
@@ -1102,9 +1075,6 @@ sample=samples\Clave(R).wav
 lokey=75 hikey=75
 pitch_keycenter=75
 pan=100
-amplfo_freq=5.12681
-fillfo_freq=5.12681
-pitchlfo_freq=5.12681
 pitcheg_release=5.33936
 fileg_release=5.33936
 ampeg_release=5.33936
@@ -1118,9 +1088,6 @@ sample=samples\Clave(L).wav
 lokey=75 hikey=75
 pitch_keycenter=75
 pan=-100
-amplfo_freq=5.12681
-fillfo_freq=5.12681
-pitchlfo_freq=5.12681
 pitcheg_release=5.33936
 fileg_release=5.33936
 ampeg_release=5.33936
@@ -1188,9 +1155,6 @@ pitch_keycenter=78
 loop_start=8
 loop_end=69111
 pan=-100
-amplfo_freq=5.12681
-fillfo_freq=5.12681
-pitchlfo_freq=5.12681
 ampeg_release=5.33936
 volume=-0.794
 group=4
@@ -1205,9 +1169,6 @@ pitch_keycenter=78
 loop_start=8
 loop_end=69111
 pan=100
-amplfo_freq=5.12681
-fillfo_freq=5.12681
-pitchlfo_freq=5.12681
 ampeg_release=5.33936
 volume=-0.794
 group=4
@@ -1220,9 +1181,6 @@ sample=samples\Quica Low.wav
 lokey=79 hikey=79
 pitch_keycenter=79
 pan=-100
-amplfo_freq=5.12681
-fillfo_freq=5.12681
-pitchlfo_freq=5.12681
 pitcheg_release=5.33936
 fileg_release=5.33936
 ampeg_release=5.33936
@@ -1239,9 +1197,6 @@ sample=samples\Quica Low.wav
 lokey=79 hikey=79
 pitch_keycenter=79
 pan=100
-amplfo_freq=5.12681
-fillfo_freq=5.12681
-pitchlfo_freq=5.12681
 pitcheg_release=5.33936
 fileg_release=5.33936
 ampeg_release=5.33936
@@ -1257,12 +1212,6 @@ loop_end=82117
 sample=samples\Triangle.wav
 lokey=80 hikey=80
 pitch_keycenter=80
-amplfo_delay=0.333132
-fillfo_delay=0.333132
-amplfo_freq=4.2005
-fillfo_freq=4.2005
-pitchlfo_delay=0.333132
-pitchlfo_freq=4.2005
 ampeg_decay=0.709972
 ampeg_sustain=0.001
 ampeg_release=0.5
@@ -1293,9 +1242,6 @@ sample=samples\Small Shaker (R).wav
 lokey=82 hikey=82
 pitch_keycenter=82
 pan=100
-amplfo_freq=5.12681
-fillfo_freq=5.12681
-pitchlfo_freq=5.12681
 pitcheg_release=1.04367
 fileg_release=1.04367
 ampeg_release=1.04367
@@ -1310,9 +1256,6 @@ sample=samples\Small Shaker (L).wav
 lokey=82 hikey=82
 pitch_keycenter=82
 pan=-100
-amplfo_freq=5.12681
-fillfo_freq=5.12681
-pitchlfo_freq=5.12681
 pitcheg_release=1.04367
 fileg_release=1.04367
 ampeg_release=1.04367
@@ -1330,9 +1273,6 @@ loop_start=8
 loop_end=88823
 fil_type=lpf_2p
 cutoff=19914
-amplfo_freq=5.12681
-fillfo_freq=5.12681
-pitchlfo_freq=5.12681
 pitcheg_release=1.05641
 fileg_release=1.05641
 ampeg_hold=0.138057
@@ -1374,9 +1314,6 @@ lokey=85 hikey=85
 pitch_keycenter=85
 loop_start=8
 loop_end=2575
-amplfo_freq=5.12681
-fillfo_freq=5.12681
-pitchlfo_freq=5.12681
 pitcheg_release=5.33936
 fileg_release=5.33936
 ampeg_release=9.99818
@@ -1388,9 +1325,6 @@ sample=samples\Short Taiko Hit.wav
 lokey=86 hikey=86
 pitch_keycenter=86
 pan=-100
-amplfo_freq=5.12681
-fillfo_freq=5.12681
-pitchlfo_freq=5.12681
 pitcheg_release=5.33936
 fileg_release=5.33936
 ampeg_release=19.9964
@@ -1409,9 +1343,6 @@ pitch_keycenter=86
 fil_type=lpf_2p
 cutoff=5121
 pan=100
-amplfo_freq=5.12681
-fillfo_freq=5.12681
-pitchlfo_freq=5.12681
 pitcheg_release=5.33936
 fileg_release=5.33936
 ampeg_release=19.9964
@@ -1464,9 +1395,6 @@ ampeg_release=29.007
 loop_mode=no_loop
 effect1=5
 ampeg_attack=0.001
-amplfo_freq=8.176
-fillfo_freq=8.176
-pitchlfo_freq=8.176
 
 <region>
 sample=samples\Low Flr Studio(R).wav
@@ -1612,9 +1540,6 @@ ampeg_hold=7.80374
 loop_mode=no_loop
 effect1=5
 ampeg_attack=0.001
-amplfo_freq=8.176
-fillfo_freq=8.176
-pitchlfo_freq=8.176
 fil_type=lpf_2p
 cutoff=19913
 
@@ -1855,9 +1780,6 @@ volume=-1.588
 loop_mode=no_loop
 effect1=5
 ampeg_attack=0.001
-amplfo_freq=8.176
-fillfo_freq=8.176
-pitchlfo_freq=8.176
 fil_type=lpf_2p
 cutoff=19913
 
@@ -2097,9 +2019,6 @@ lokey=0 hikey=38
 loop_mode=no_loop
 effect1=5
 ampeg_attack=0.001
-amplfo_freq=8.176
-fillfo_freq=8.176
-pitchlfo_freq=8.176
 fil_type=lpf_2p
 cutoff=19913
 
@@ -2343,9 +2262,6 @@ ampeg_sustain=0.001
 loop_mode=no_loop
 effect1=2
 ampeg_attack=0.001
-amplfo_freq=8.176
-fillfo_freq=8.176
-pitchlfo_freq=8.176
 fil_type=lpf_2p
 cutoff=19913
 
@@ -2621,9 +2537,6 @@ loop_mode=no_loop
 volume=-0.6352
 effect1=5
 ampeg_attack=0.001
-amplfo_freq=8.176
-fillfo_freq=8.176
-pitchlfo_freq=8.176
 fil_type=lpf_2p
 cutoff=19913
 
