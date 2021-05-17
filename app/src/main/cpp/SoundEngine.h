@@ -12,13 +12,12 @@
 #include "sfizz.hpp"
 #include "batteur.h"
 #include "oboe/samples/shared/IRestartable.h"
-#include "oboe/samples/shared/DefaultAudioStreamCallback.h"
 
-class Callback: public DefaultAudioStreamCallback {
+class DataCallback: public oboe::AudioStreamDataCallback {
 public:
-    Callback() = delete;
-    Callback(IRestartable& parent, sfz::Sfizz& sfizz, batteur_player_t* player)
-    : DefaultAudioStreamCallback(parent)
+    DataCallback() = delete;
+    DataCallback(sfz::Sfizz& sfizz, batteur_player_t* player)
+    : AudioStreamDataCallback()
     , sfizz(sfizz)
     , player(player)
     {
@@ -29,6 +28,11 @@ public:
             buffer.resize(oboe::DefaultStreamValues::FramesPerBurst);
     }
     oboe::DataCallbackResult onAudioReady(oboe::AudioStream *oboeStream, void *audioData, int32_t numFrames) override;
+    void resizeBuffers(size_t size)
+    {
+        for (auto& buffer: buffers)
+            buffer.resize(size);
+    }
 private:
     std::array<std::vector<float>, 2> buffers;
     sfz::Sfizz& sfizz;
@@ -60,9 +64,9 @@ public:
         sfizz.noteOn(0, number, velocity);
     }
     void setBufferSizeInBursts(int32_t numBursts);
-    void loadSfzFile(std::string_view path);
-    void loadSfzString(std::string_view string);
-    void loadBeat(std::string_view string);
+    void loadSfzFile(const std::string& path);
+    void loadSfzString(const std::string& string);
+    void loadBeat(const std::string& string);
     void play();
     void stop();
     void fillIn();
@@ -75,7 +79,7 @@ private:
     batteur_player_t* player { batteur_new() };
     batteur_beat_t* beat { nullptr };
     oboe::ManagedStream managedStream;
-    std::unique_ptr<Callback> callback { std::make_unique<Callback>(*this, sfizz, player) };
+    std::unique_ptr<DataCallback> callback { std::make_unique<DataCallback>(sfizz, player) };
     oboe::Result createPlaybackStream(oboe::AudioStreamBuilder builder);
     static void batteurCallback(int delay, uint8_t number, uint8_t value, void* cbdata);
     void start();

@@ -3,12 +3,12 @@
 //
 
 #include "SoundEngine.h"
-#include "sfizz/src/external/ghc/filesystem.hpp"
+#include "sfizz/external/filesystem/include/ghc/filesystem.hpp"
 namespace fs = ghc::filesystem;
 #include "oboe/samples/debug-utils/logging_macros.h"
 #include <trace.h>
 
-oboe::DataCallbackResult Callback::onAudioReady(oboe::AudioStream *oboeStream, void *audioData, int32_t numFrames)
+oboe::DataCallbackResult DataCallback::onAudioReady(oboe::AudioStream *oboeStream, void *audioData, int32_t numFrames)
 {
     if (Trace::isEnabled()) {
         const auto underrunCountResult = oboeStream->getXRunCount();
@@ -23,14 +23,16 @@ oboe::DataCallbackResult Callback::onAudioReady(oboe::AudioStream *oboeStream, v
         return oboe::DataCallbackResult::Stop;
     }
 
-    if (player == nullptr)
+    if (player == nullptr) {
         return oboe::DataCallbackResult::Stop;
+    }
 
     batteur_tick(player, numFrames);
 
     auto* output = reinterpret_cast<float*>(audioData);
     float* audioBuffer[2] { buffers[0].data(), buffers[1].data() };
     const auto bufferSize = static_cast<int32_t>(buffers[0].size());
+//    LOGD("Buffer size/num frames: %d %d", bufferSize, numFrames);
     int32_t renderIdx { 0 };
     while (numFrames > 0) {
         const auto frames = std::min(bufferSize, numFrames);
@@ -42,25 +44,27 @@ oboe::DataCallbackResult Callback::onAudioReady(oboe::AudioStream *oboeStream, v
         renderIdx += 2 * frames;
         numFrames -= frames;
     }
+
     if (Trace::isEnabled())
         Trace::endSection();
+
     return oboe::DataCallbackResult::Continue;
 }
 
-void SoundEngine::loadSfzString(std::string_view string)
+void SoundEngine::loadSfzString(const std::string& string)
 {
-    sfizz.loadSfzString(fs::current_path().native(), std::string(string));
+    sfizz.loadSfzString(fs::current_path().native(), string);
 }
 
-void SoundEngine::loadSfzFile(std::string_view path)
+void SoundEngine::loadSfzFile(const std::string& path)
 {
-    sfizz.loadSfzFile(std::string(path));
+    sfizz.loadSfzFile(path);
 }
 
-void SoundEngine::loadBeat(std::string_view path)
+void SoundEngine::loadBeat(const std::string& path)
 {
     batteur_stop(player);
-    auto nextBeat = batteur_load_beat(std::string(path).c_str());
+    auto nextBeat = batteur_load_beat(path.c_str());
     if (nextBeat != nullptr) {
         batteur_load(player, nextBeat);
         batteur_free_beat(beat);
@@ -107,6 +111,10 @@ void SoundEngine::start()
         if (player)
             batteur_set_sample_rate(player, sampleRate);
 
+        const auto blockSize = managedStream->getFramesPerCallback();
+        sfizz.setSamplesPerBlock(blockSize);
+        callback->resizeBuffers(blockSize);
+
         result = managedStream->requestStart();
         if (result != oboe::Result::OK) {
             LOGE("Error starting stream. %s", oboe::convertToText(result));
@@ -130,7 +138,7 @@ void SoundEngine::batteurCallback(int delay, uint8_t number, uint8_t value, void
 
 SoundEngine::SoundEngine()
 {
-    sfizz.setNumVoices(24);
+    sfizz.setSampleQuality(sfz::Sfizz::ProcessMode::ProcessLive, 1);
     batteur_note_cb(player, &SoundEngine::batteurCallback, &sfizz);
     start();
 }
@@ -193,7 +201,7 @@ oboe::Result SoundEngine::createPlaybackStream(oboe::AudioStreamBuilder builder)
     return builder.setSharingMode(oboe::SharingMode::Exclusive)
             ->setPerformanceMode(oboe::PerformanceMode::LowLatency)
             ->setFormat(oboe::AudioFormat::Float)
-            ->setCallback(callback.get())
+            ->setDataCallback(callback.get())
             ->openManagedStream(managedStream);
 }
 

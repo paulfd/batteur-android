@@ -3,20 +3,20 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/app/src/main/cpp/batteur" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/app/src/main/cpp/flac" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/app/src/main/cpp/libsndfile" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/app/src/main/cpp/oboe" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/app/src/main/cpp/ogg" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/app/src/main/cpp/sfizz" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/app/src/main/cpp/sfizz/editor/external/vstgui4" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/app/src/main/cpp/sfizz/external/abseil-cpp" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/app/src/main/cpp/sfizz/external/filesystem" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/app/src/main/cpp/sfizz/external/simde" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/app/src/main/cpp/sfizz/external/simde/test/munit" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/app/src/main/cpp/sfizz/external/st_audiofile/thirdparty/dr_libs" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/app/src/main/cpp/sfizz/external/st_audiofile/thirdparty/dr_libs/tests/external/miniaudio" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/app/src/main/cpp/sfizz/external/st_audiofile/thirdparty/libaiff" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/app/src/main/cpp/sfizz/external/st_audiofile/thirdparty/stb_vorbis" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/app/src/main/cpp/sfizz/vst/external/VST_SDK/VST3_SDK/base" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/app/src/main/cpp/sfizz/vst/external/VST_SDK/VST3_SDK/pluginterfaces" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/app/src/main/cpp/sfizz/vst/external/VST_SDK/VST3_SDK/public.sdk" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/app/src/main/cpp/sfizz/vst/external/VST_SDK/VST3_SDK/vstgui4" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/app/src/main/cpp/vorbis" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/app/src/main/cpp/sfizz/plugins/editor/external/vstgui4" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/app/src/main/cpp/sfizz/plugins/vst/external/VST_SDK/VST3_SDK/base" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/app/src/main/cpp/sfizz/plugins/vst/external/VST_SDK/VST3_SDK/pluginterfaces" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/app/src/main/cpp/sfizz/plugins/vst/external/VST_SDK/VST3_SDK/public.sdk" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/app/src/main/cpp/sfizz/plugins/vst/external/sfzt_auwrapper" vcs="Git" />
   </component>
 </project>

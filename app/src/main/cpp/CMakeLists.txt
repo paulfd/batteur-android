@@ -5,18 +5,18 @@
 
 cmake_minimum_required(VERSION 3.4.1)
 # Using C++ 17 conflicts because we're gonna assume that the filesystem library is there...
-SET(CMAKE_CXX_STANDARD 14)
-SET(CMAKE_BUILD_TYPE Release)
+SET(CMAKE_CXX_STANDARD 17)
 # Force LTO
-set(ENABLE_LTO ON CACHE BOOL "" FORCE)
+set(CMAKE_BUILD_TYPE "RelWithDebInfo" CACHE STRING "" FORCE)
+#message(FATAL_ERROR "Build type: ${CMAKE_BUILD_TYPE}")
 
 SET(SFIZZ_LV2 OFF CACHE BOOL "Disable sfizz's LV2")
 SET(SFIZZ_VST OFF CACHE BOOL "Disable sfizz's VST")
 SET(SFIZZ_LV2_UI OFF CACHE BOOL "Disable sfizz's LV2 UI")
 SET(SFIZZ_RENDER OFF CACHE BOOL "Disable sfizz render")
-SET(ENABLE_LTO OFF CACHE BOOL "Disable sfizz LTO")
 SET(SFIZZ_JACK OFF CACHE BOOL "Disable sfizz jack")
 SET(SFIZZ_SHARED OFF CACHE BOOL "disable sfizz shared library")
+set(ENABLE_LTO ON CACHE BOOL  "" FORCE)
 set(SFIZZ_USE_SNDFILE OFF CACHE BOOL "" FORCE)
 
 add_subdirectory(sfizz)
@@ -45,3 +45,5 @@ target_include_directories(native-lib PRIVATE ${DEBUG_UTILS_PATH})
 
 find_library(log-lib log)
 target_link_libraries(native-lib ${log-lib} oboe batteur sfizz::sfizz)
+#target_compile_options(native-lib PUBLIC -fsanitize=address -fno-omit-frame-pointer)
+#set_target_properties(native-lib PROPERTIES LINK_FLAGS -fsanitize=address)

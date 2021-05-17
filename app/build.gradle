@@ -29,6 +29,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.debug
+            jniDebuggable false
+        }
+        debug {
+            jniDebuggable true
         }
     }
 
@@ -45,6 +49,7 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
+    ndkVersion '22.1.7171670'
 }
 
 dependencies {
