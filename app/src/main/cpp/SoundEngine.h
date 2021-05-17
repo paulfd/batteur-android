@@ -12,14 +12,16 @@
 #include "sfizz.hpp"
 #include "batteur.h"
 #include "oboe/samples/shared/IRestartable.h"
+#include "SpinMutex.h"
 
 class DataCallback: public oboe::AudioStreamDataCallback {
 public:
     DataCallback() = delete;
-    DataCallback(sfz::Sfizz& sfizz, batteur_player_t* player)
+    DataCallback(sfz::Sfizz& sfizz, batteur_player_t* player, SpinMutex& processMutex)
     : AudioStreamDataCallback()
     , sfizz(sfizz)
     , player(player)
+    , processMutex(processMutex)
     {
         if (player == nullptr)
             std::terminate();
@@ -36,6 +38,7 @@ public:
 private:
     std::array<std::vector<float>, 2> buffers;
     sfz::Sfizz& sfizz;
+    SpinMutex& processMutex;
     batteur_player_t* player;
 };
 
@@ -76,10 +79,11 @@ public:
     double getTempo() const;
 private:
     sfz::Sfizz sfizz;
+    SpinMutex processMutex;
     batteur_player_t* player { batteur_new() };
     batteur_beat_t* beat { nullptr };
     oboe::ManagedStream managedStream;
-    std::unique_ptr<DataCallback> callback { std::make_unique<DataCallback>(sfizz, player) };
+    std::unique_ptr<DataCallback> callback { std::make_unique<DataCallback>(sfizz, player, processMutex) };
     oboe::Result createPlaybackStream(oboe::AudioStreamBuilder builder);
     static void batteurCallback(int delay, uint8_t number, uint8_t value, void* cbdata);
     void start();

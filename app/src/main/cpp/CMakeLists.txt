@@ -44,6 +44,6 @@ target_include_directories (native-lib PRIVATE ${OBOE_DIR}/include)
 target_include_directories(native-lib PRIVATE ${DEBUG_UTILS_PATH})
 
 find_library(log-lib log)
-target_link_libraries(native-lib ${log-lib} oboe batteur sfizz::sfizz)
+target_link_libraries(native-lib ${log-lib} oboe batteur sfizz::sfizz sfizz::spin_mutex)
 #target_compile_options(native-lib PUBLIC -fsanitize=address -fno-omit-frame-pointer)
 #set_target_properties(native-lib PROPERTIES LINK_FLAGS -fsanitize=address)

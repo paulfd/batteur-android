@@ -27,6 +27,13 @@ oboe::DataCallbackResult DataCallback::onAudioReady(oboe::AudioStream *oboeStrea
         return oboe::DataCallbackResult::Stop;
     }
 
+    std::unique_lock<SpinMutex> lock(processMutex, std::try_to_lock);
+    if (!lock.owns_lock())
+    {
+        memset(buffers[0].data(), 0, numFrames * sizeof(float));
+        memset(buffers[1].data(), 0, numFrames * sizeof(float));
+        return oboe::DataCallbackResult::Continue;
+    }
     batteur_tick(player, numFrames);
 
     auto* output = reinterpret_cast<float*>(audioData);
@@ -53,11 +60,13 @@ oboe::DataCallbackResult DataCallback::onAudioReady(oboe::AudioStream *oboeStrea
 
 void SoundEngine::loadSfzString(const std::string& string)
 {
+    std::unique_lock<SpinMutex> lock(processMutex);
     sfizz.loadSfzString(fs::current_path().native(), string);
 }
 
 void SoundEngine::loadSfzFile(const std::string& path)
 {
+    std::unique_lock<SpinMutex> lock(processMutex);
     sfizz.loadSfzFile(path);
 }
 
@@ -106,6 +115,7 @@ void SoundEngine::start()
             ->setAudioApi(oboe::AudioApi::Unspecified)
     );
     if (result == oboe::Result::OK){
+        std::unique_lock<SpinMutex> lock(processMutex);
         const auto sampleRate = managedStream->getSampleRate();
         sfizz.setSampleRate(sampleRate);
         if (player)
@@ -139,6 +149,7 @@ void SoundEngine::batteurCallback(int delay, uint8_t number, uint8_t value, void
 SoundEngine::SoundEngine()
 {
     sfizz.setSampleQuality(sfz::Sfizz::ProcessMode::ProcessLive, 1);
+    sfizz.setNumVoices(32);
     batteur_note_cb(player, &SoundEngine::batteurCallback, &sfizz);
     start();
 }
