@@ -38,8 +38,8 @@ public:
 private:
     std::array<std::vector<float>, 2> buffers;
     sfz::Sfizz& sfizz;
-    SpinMutex& processMutex;
     batteur_player_t* player;
+    SpinMutex& processMutex;
 };
 
 class SoundEngine : public IRestartable {
@@ -85,7 +85,7 @@ private:
     oboe::ManagedStream managedStream;
     std::unique_ptr<DataCallback> callback { std::make_unique<DataCallback>(sfizz, player, processMutex) };
     oboe::Result createPlaybackStream(oboe::AudioStreamBuilder builder);
-    static void batteurCallback(int delay, uint8_t number, uint8_t value, void* cbdata);
+    static void batteurCallback(int delay, uint8_t number, float value, void* cbdata);
     void start();
 
 };

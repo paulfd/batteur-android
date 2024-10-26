@@ -114,14 +114,14 @@ void SoundEngine::start()
             .setChannelCount(2)
             ->setAudioApi(oboe::AudioApi::Unspecified)
     );
+
     if (result == oboe::Result::OK){
-        std::unique_lock<SpinMutex> lock(processMutex);
         const auto sampleRate = managedStream->getSampleRate();
         sfizz.setSampleRate(sampleRate);
         if (player)
             batteur_set_sample_rate(player, sampleRate);
 
-        const auto blockSize = managedStream->getFramesPerCallback();
+        const auto blockSize = std::max(1024, managedStream->getFramesPerCallback());
         sfizz.setSamplesPerBlock(blockSize);
         callback->resizeBuffers(blockSize);
 
@@ -134,16 +134,16 @@ void SoundEngine::start()
     }
 }
 
-void SoundEngine::batteurCallback(int delay, uint8_t number, uint8_t value, void* cbdata)
+void SoundEngine::batteurCallback(int delay, uint8_t number, float value, void* cbdata)
 {
     auto* sfizz = (sfz::Sfizz*)cbdata;
     if (sfizz == nullptr)
         return;
 
     if (value > 0)
-        sfizz->noteOn(delay, number, value);
+        sfizz->hdNoteOn(delay, number, value);
     else
-        sfizz->noteOff(delay, number, value);
+        sfizz->hdNoteOff(delay, number, value);
 }
 
 SoundEngine::SoundEngine()

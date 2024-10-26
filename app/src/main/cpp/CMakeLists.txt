@@ -7,7 +7,7 @@ cmake_minimum_required(VERSION 3.4.1)
 # Using C++ 17 conflicts because we're gonna assume that the filesystem library is there...
 SET(CMAKE_CXX_STANDARD 17)
 # Force LTO
-set(CMAKE_BUILD_TYPE "RelWithDebInfo" CACHE STRING "" FORCE)
+#set(CMAKE_BUILD_TYPE "RelWithDebInfo" CACHE STRING "" FORCE)
 #message(FATAL_ERROR "Build type: ${CMAKE_BUILD_TYPE}")
 
 SET(SFIZZ_LV2 OFF CACHE BOOL "Disable sfizz's LV2")
